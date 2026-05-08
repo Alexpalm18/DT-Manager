@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="DT Hiring">
+<title>Hiring Checklist — Daughter Thai</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:#0f0e0d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#fff;min-height:100vh;padding-bottom:80px}
+a{text-decoration:none;color:#c9a84c}
+/* header */
+.page-header{background:linear-gradient(135deg,#1a0f00 0%,#0f0e0d 100%);padding:44px 18px 18px;border-bottom:1px solid rgba(201,168,76,.2)}
+.header-eyebrow{font-size:9px;font-weight:700;color:#c9a84c;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.header-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.header-title{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.new-hire-btn{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);color:#c9a84c;font-size:11px;font-weight:700;padding:7px 14px;border-radius:20px;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.new-hire-btn:active{background:rgba(201,168,76,.3)}
+/* employee info */
+.employee-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;margin:14px 16px;padding:14px 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field-group{display:flex;flex-direction:column;gap:4px}
+.field-group.full{grid-column:1/-1}
+.field-label{font-size:9px;font-weight:700;color:#c9a84c;letter-spacing:1.2px;text-transform:uppercase}
+.field-input{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:#fff;font-size:13px;font-weight:600;padding:8px 10px;outline:none;width:100%;font-family:inherit}
+.field-input::placeholder{color:rgba(255,255,255,.25)}
+.field-input:focus{border-color:rgba(201,168,76,.5);background:rgba(201,168,76,.06)}
+/* progress */
+.progress-wrap{padding:12px 16px 4px}
+.progress-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.progress-label{font-size:11px;color:rgba(255,255,255,.4)}
+.progress-count{font-size:13px;font-weight:700;color:#c9a84c}
+.progress-bar{height:5px;background:rgba(255,255,255,.1);border-radius:10px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#c9a84c,#e8c97a);border-radius:10px;transition:width .4s ease}
+/* sections */
+.section{margin:12px 16px 0}
+.section-header{display:flex;align-items:center;gap:10px;padding:13px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px 12px 0 0;cursor:pointer}
+.section-header.open{border-bottom:1px solid rgba(255,255,255,.05)}
+.section-icon{font-size:18px;flex-shrink:0}
+.section-title{flex:1;font-size:13px;font-weight:700;color:#fff}
+.section-prog{font-size:10px;color:rgba(255,255,255,.35);flex-shrink:0}
+.section-chev{font-size:14px;color:rgba(255,255,255,.3);flex-shrink:0;transition:transform .2s}
+.section-chev.open{transform:rotate(90deg)}
+.section-body{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-top:none;border-radius:0 0 12px 12px;overflow:hidden;display:none}
+.section-body.open{display:block}
+/* check items */
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;transition:background .15s}
+.check-item:last-child{border-bottom:none}
+.check-item:active{background:rgba(255,255,255,.04)}
+.check-item.done .check-text{color:rgba(255,255,255,.3);text-decoration:line-through}
+.check-box{width:22px;height:22px;border-radius:6px;border:2px solid rgba(255,255,255,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all .2s}
+.check-item.done .check-box{background:#c9a84c;border-color:#c9a84c}
+.check-tick{font-size:13px;color:#0f0e0d;display:none}
+.check-item.done .check-tick{display:block}
+.check-text{font-size:13px;color:rgba(255,255,255,.8);line-height:1.45;flex:1}
+.check-note{font-size:11px;color:rgba(255,255,255,.35);margin-top:3px;line-height:1.4;font-style:italic}
+/* date fields inside sections */
+.section-fields{padding:10px 16px 14px;background:rgba(201,168,76,.03);border-top:1px solid rgba(255,255,255,.05);display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.section-fields .field-group.full{grid-column:1/-1}
+/* complete banner */
+.complete-banner{display:none;margin:16px;background:linear-gradient(135deg,rgba(201,168,76,.2),rgba(201,168,76,.08));border:1px solid rgba(201,168,76,.4);border-radius:14px;padding:18px;text-align:center}
+.complete-banner.show{display:block}
+.complete-banner h3{font-size:16px;color:#c9a84c;margin-bottom:6px}
+.complete-banner p{font-size:12px;color:rgba(255,255,255,.5);line-height:1.5}
+/* back */
+.back-btn{display:flex;align-items:center;gap:5px;color:rgba(201,168,76,.7);font-size:12px;font-weight:600;padding:10px 16px 0;cursor:pointer}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-eyebrow">Daughter Thai Kitchen</div>
+  <div class="header-row">
+    <div class="header-title">Hiring Checklist</div>
+    <button class="new-hire-btn" onclick="startNewHire()">+ New Hire</button>
+  </div>
+</div>
+
+<div class="employee-card">
+  <div class="field-group full">
+    <div class="field-label">Employee Name</div>
+    <input class="field-input" id="emp-name" type="text" placeholder="Full name..." oninput="saveField('emp-name',this.value)">
+  </div>
+  <div class="field-group">
+    <div class="field-label">First Day</div>
+    <input class="field-input" id="emp-start" type="date" oninput="saveField('emp-start',this.value)">
+  </div>
+  <div class="field-group">
+    <div class="field-label">Position</div>
+    <input class="field-input" id="emp-pos" type="text" placeholder="e.g. Server..." oninput="saveField('emp-pos',this.value)">
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span class="progress-label">Progress</span>
+    <span class="progress-count" id="prog-count">0 / 0</span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+</div>
+
+<div id="sections-wrap"></div>
+
+<div class="complete-banner" id="complete-banner">
+  <h3>🎉 All Done!</h3>
+  <p>All checklist items complete.<br>Make sure all forms are signed and filed.</p>
+</div>
+
+<div style="text-align:center;padding:20px 16px 0">
+  <a href="hr-hub.html" class="back-btn">‹ Back to Manager Hub</a>
+</div>
+
+<script>
+const SECTIONS = [
+  {id:'s1', icon:'📋', title:'1 — Application & ID',
+   items:[
+    {id:'s1_1', text:'Application form completed',note:'No SS# written anywhere on the form'},
+    {id:'s1_2', text:'Easy-to-read handwriting'},
+    {id:'s1_3', text:'Applied position noted'},
+    {id:'s1_4', text:'Date & time of availability filled in'},
+    {id:'s1_5', text:'Employment history included (at least 1 reference)'},
+    {id:'s1_6', text:'SSN, name & work authorization verified — matches IDs'},
+    {id:'s1_7', text:'Copy of ID obtained'},
+    {id:'s1_8', text:'Copy of Vaccination Card obtained'},
+   ]},
+  {id:'s2', icon:'🗣️', title:'2 — Interview',
+   items:[
+    {id:'s2_1', text:'Interview conducted by management'},
+    {id:'s2_2', text:'Tips policy explained'},
+   ]},
+  {id:'s3', icon:'📝', title:'3 — Tax & Eligibility Forms',
+   items:[
+    {id:'s3_1', text:'W-4 completed & verified',
+     note:'Check: readable · start date top-right · SSN xxx-xx-xxxx (NOT ITIN 9xx/8xx/7xx) · DOB · address/phone/email · marital status · signature & date'},
+    {id:'s3_2', text:'I-9 completed'},
+   ]},
+  {id:'s4', icon:'📚', title:'4 — Handbook Training (2 hrs paid)',
+   items:[
+    {id:'s4_1', text:'Food safety covered'},
+    {id:'s4_2', text:'Safety training covered'},
+    {id:'s4_3', text:'Harassment training covered'},
+    {id:'s4_4', text:'Tips policy covered'},
+    {id:'s4_5', text:'Benefit packages covered'},
+    {id:'s4_6', text:'Q&A completed (employee handwriting, notes on back)'},
+    {id:'s4_7', text:'Handbook signed by employee'},
+    {id:'s4_8', text:'Acknowledgement form signed'},
+   ],
+   fields:[
+    {id:'f_hb_given', label:'Handbook given on'},
+    {id:'f_hb_received', label:'Handbook received on'},
+    {id:'f_ack_date', label:'Acknowledgement date'},
+    {id:'f_2hr_pay', label:'2 hrs added to paycheck'},
+   ]},
+  {id:'s5', icon:'🛡️', title:'5 — Food Safety & Certs',
+   items:[
+    {id:'s5_1', text:'Basic Food Safety Knowledge Package provided'},
+    {id:'s5_2', text:'Food Handler Card / ServSafe (due within 30 days)'},
+    {id:'s5_3', text:'RBS / ABC Certificate provided',
+     note:'Required before first day for all FOH staff (mandatory after Sep 2022)'},
+   ],
+   fields:[
+    {id:'f_fs_given', label:'Food Safety given on'},
+    {id:'f_fh_due', label:'Food Handler due date'},
+   ]},
+  {id:'s6', icon:'📜', title:'6 — Policies & Benefits',
+   items:[
+    {id:'s6_1', text:'At-will employment explained'},
+    {id:'s6_2', text:'Tips policy explained (80% FOH / 20% BOH — Pooled)'},
+    {id:'s6_3', text:'Sick pay policy explained',
+     note:'Accrues immediately · usable after 90 days · no cash-out at termination'},
+    {id:'s6_4', text:'CAL SAVER / Health Insurance — accepted or waiver signed'},
+    {id:'s6_5', text:'Planned vacations asked about'},
+   ],
+   fields:[
+    {id:'f_prob_due', label:'90-day probation due'},
+   ]},
+  {id:'s7', icon:'⚠️', title:'7 — Manager Reminders',
+   items:[
+    {id:'s7_1', text:'No verbal warnings — incident reports only (don't acknowledge to employee)'},
+    {id:'s7_2', text:'Employment verification: AT-WILL only · hours from records · no PT/FT disclosure'},
+    {id:'s7_3', text:'Resignation letter requested if voluntary quit'},
+   ]},
+];
+
+const TOTAL = SECTIONS.reduce((a,s)=>a+s.items.length,0);
+let state = {};
+
+function loadState(){
+  try { state = JSON.parse(localStorage.getItem('dt_hire')||'{}'); } catch(e){ state={}; }
+}
+function saveState(){
+  localStorage.setItem('dt_hire', JSON.stringify(state));
+  updateProgress();
+}
+function saveField(id,val){
+  state[id]=val; saveState();
+}
+
+function startNewHire(){
+  if(!confirm('Start a new hire? This will clear the current checklist.')) return;
+  state={};
+  localStorage.removeItem('dt_hire');
+  document.getElementById('emp-name').value='';
+  document.getElementById('emp-start').value='';
+  document.getElementById('emp-pos').value='';
+  document.querySelectorAll('.field-input[data-fid]').forEach(el=>el.value='');
+  document.querySelectorAll('.check-item').forEach(el=>el.classList.remove('done'));
+  updateProgress();
+}
+
+function toggleItem(id, el){
+  state[id] = !state[id];
+  el.classList.toggle('done', state[id]);
+  saveState();
+}
+
+function updateProgress(){
+  let done = SECTIONS.reduce((a,s)=>a+s.items.filter(i=>state[i.id]).length, 0);
+  document.getElementById('prog-count').textContent = done+' / '+TOTAL;
+  document.getElementById('prog-fill').style.width = Math.round(done/TOTAL*100)+'%';
+  // update section badges
+  SECTIONS.forEach(s=>{
+    let sdone = s.items.filter(i=>state[i.id]).length;
+    let el = document.getElementById('sprog_'+s.id);
+    if(el) el.textContent = sdone+'/'+s.items.length;
+  });
+  document.getElementById('complete-banner').classList.toggle('show', done===TOTAL);
+}
+
+function toggleSection(id){
+  let body = document.getElementById('sbody_'+id);
+  let chev = document.getElementById('schev_'+id);
+  let hdr = document.getElementById('shdr_'+id);
+  let open = body.classList.contains('open');
+  body.classList.toggle('open',!open);
+  chev.classList.toggle('open',!open);
+  hdr.classList.toggle('open',!open);
+}
+
+function render(){
+  loadState();
+  let wrap = document.getElementById('sections-wrap');
+  wrap.innerHTML = '';
+  SECTIONS.forEach(s=>{
+    let sdone = s.items.filter(i=>state[i.id]).length;
+    let itemsHtml = s.items.map(item=>`
+      <div class="check-item${state[item.id]?' done':''}" id="ci_${item.id}" onclick="toggleItem('${item.id}',this)">
+        <div class="check-box"><span class="check-tick">✓</span></div>
+        <div>
+          <div class="check-text">${item.text}</div>
+          ${item.note?`<div class="check-note">${item.note}</div>`:''}
+        </div>
+      </div>`).join('');
+
+    let fieldsHtml = '';
+    if(s.fields && s.fields.length){
+      fieldsHtml = '<div class="section-fields">';
+      s.fields.forEach(f=>{
+        let val = state[f.id]||'';
+        let isDate = f.label.toLowerCase().includes('date')||f.label.toLowerCase().includes('on')||f.label.toLowerCase().includes('due');
+        fieldsHtml += `<div class="field-group${s.fields.length===1?' full':''}">
+          <div class="field-label">${f.label}</div>
+          <input class="field-input" data-fid="${f.id}" type="${isDate?'date':'text'}" value="${val}" oninput="saveField('${f.id}',this.value)">
+        </div>`;
+      });
+      fieldsHtml += '</div>';
+    }
+
+    wrap.innerHTML += `
+    <div class="section">
+      <div class="section-header open" id="shdr_${s.id}" onclick="toggleSection('${s.id}')">
+        <div class="section-icon">${s.icon}</div>
+        <div class="section-title">${s.title}</div>
+        <div class="section-prog" id="sprog_${s.id}">${sdone}/${s.items.length}</div>
+        <div class="section-chev open" id="schev_${s.id}">›</div>
+      </div>
+      <div class="section-body open" id="sbody_${s.id}">
+        ${itemsHtml}
+        ${fieldsHtml}
+      </div>
+    </div>`;
+  });
+
+  // restore field values
+  document.getElementById('emp-name').value = state['emp-name']||'';
+  document.getElementById('emp-start').value = state['emp-start']||'';
+  document.getElementById('emp-pos').value = state['emp-pos']||'';
+
+  updateProgress();
+}
+
+render();
+</script>
+</body>
+</html>
